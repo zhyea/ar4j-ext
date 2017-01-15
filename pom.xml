@@ -25,9 +25,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/zhyea/ar4j-core.git</connection>
-        <developerConnection>scm:git:https://github.com/zhyea/ar4j-core.git</developerConnection>
-        <url>https://github.com/zhyea/ar4j-core</url>
+        <connection>scm:git:https://github.com/zhyea/ar4j-ext.git</connection>
+        <developerConnection>scm:git:https://github.com/zhyea/ar4j-ext.git</developerConnection>
+        <url>https://github.com/zhyea/ar4j-ext</url>
     </scm>
 
     <developers>
