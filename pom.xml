@@ -6,8 +6,12 @@
 
     <groupId>com.zhyea.ar4j.ext</groupId>
     <artifactId>ar4j-ext</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>ActiveRecord for java</description>
+    <url>https://github.com/zhyea/ar4j-ext</url>
 
 
     <properties>
@@ -18,7 +22,8 @@
         <dependency>
             <groupId>com.zhyea.ar4j.core</groupId>
             <artifactId>ar4j-core</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>0.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
