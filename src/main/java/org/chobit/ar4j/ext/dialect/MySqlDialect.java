@@ -1,7 +1,7 @@
-package com.zhyea.ar4j.ext.dialect;
+package org.chobit.ar4j.ext.dialect;
 
 
-import com.zhyea.ar4j.core.dialect.Dialect;
+import org.chobit.ar4j.core.dialect.Dialect;
 
 public class MySqlDialect implements Dialect {
 

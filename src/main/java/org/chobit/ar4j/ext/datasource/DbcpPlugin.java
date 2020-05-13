@@ -1,6 +1,6 @@
-package com.zhyea.ar4j.ext.datasource;
+package org.chobit.ar4j.ext.datasource;
 
-import com.zhyea.ar4j.core.datasource.DataSourcePlugin;
+import org.chobit.ar4j.core.datasource.DataSourcePlugin;
 import org.apache.commons.dbcp2.*;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
