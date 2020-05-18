@@ -12,7 +12,7 @@
 
     <groupId>org.chobit.ar4j</groupId>
     <artifactId>ar4j-ext</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>AR4J Ext</name>
@@ -27,18 +27,18 @@
         <dependency>
             <groupId>org.chobit.ar4j</groupId>
             <artifactId>ar4j-core</artifactId>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.39</version>
+            <version>8.0.20</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>2.1.1</version>
+            <version>2.7.0</version>
         </dependency>
     </dependencies>
 

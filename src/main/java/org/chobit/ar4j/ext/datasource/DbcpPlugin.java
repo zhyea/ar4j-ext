@@ -1,25 +1,48 @@
 package org.chobit.ar4j.ext.datasource;
 
-import org.chobit.ar4j.core.datasource.DataSourcePlugin;
 import org.apache.commons.dbcp2.*;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.chobit.ar4j.core.datasource.DataSourcePlugin;
+import org.chobit.ar4j.core.exception.ArConfigException;
 
 import javax.sql.DataSource;
+import java.util.Properties;
+
+import static org.chobit.ar4j.core.tools.Strings.isBlank;
+import static org.chobit.ar4j.core.tools.Strings.isNotBlank;
 
 public class DbcpPlugin implements DataSourcePlugin {
 
     private final String url;
-    private final String username;
-    private final String password;
+    private final Properties props = new Properties();
 
     private DataSource dataSource;
 
     public DbcpPlugin(String url, String username, String password) {
+        this(url, username, password, new Properties());
+    }
+
+    public DbcpPlugin(String url, Properties props) {
+        this(url, null, null, props);
+    }
+
+    public DbcpPlugin(String url, String username, String password, Properties props) {
+        if (isBlank(url)) {
+            throw new ArConfigException("The url for datasource is empty.");
+        }
+        addDefaultProps();
         this.url = url;
-        this.username = username;
-        this.password = password;
+        if (null != props) {
+            this.props.putAll(props);
+        }
+        if (isNotBlank(username)) {
+            this.props.put("user", username);
+        }
+        if (isNotBlank(password)) {
+            this.props.put("password", password);
+        }
         this.dataSource = buildDataSource();
     }
 
@@ -33,15 +56,22 @@ public class DbcpPlugin implements DataSourcePlugin {
     }
 
 
+    private void addDefaultProps() {
+        this.props.put("testOnBorrow", true);
+        this.props.put("testWhileIdle", true);
+        this.props.put("testOnReturn", true);
+        this.props.put("validationQuery", "SELECT 1");
+    }
+
     private DataSource buildDataSource() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(this.url, this.username, this.password);
+        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(this.url, this.props);
         PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, null);
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+        GenericObjectPoolConfig<PoolableConnection> poolConfig = new GenericObjectPoolConfig<PoolableConnection>();
         ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<PoolableConnection>(poolableConnectionFactory, poolConfig);
         poolableConnectionFactory.setPool(connectionPool);
         PoolingDataSource<PoolableConnection> dataSource = new PoolingDataSource<PoolableConnection>(connectionPool);
