@@ -9,6 +9,7 @@ import org.chobit.ar4j.core.exception.ArConfigException;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import static org.chobit.ar4j.core.tools.Strings.isBlank;
 import static org.chobit.ar4j.core.tools.Strings.isNotBlank;
@@ -61,6 +62,7 @@ public class DbcpPlugin implements DataSourcePlugin {
         this.props.put("testWhileIdle", true);
         this.props.put("testOnReturn", true);
         this.props.put("validationQuery", "SELECT 1");
+        this.props.put("timeBetweenEvictionRunsMillis", TimeUnit.MINUTES.toMillis(3));
     }
 
     private DataSource buildDataSource() {
