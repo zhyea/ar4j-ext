@@ -1,5 +1,6 @@
 package org.chobit.ar4j.ext.datasource;
 
+import com.mysql.jdbc.Driver;
 import org.apache.commons.dbcp2.*;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
@@ -9,8 +10,8 @@ import org.chobit.ar4j.core.exception.ArConfigException;
 
 import javax.sql.DataSource;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.chobit.ar4j.core.tools.Strings.isBlank;
 import static org.chobit.ar4j.core.tools.Strings.isNotBlank;
 
@@ -62,12 +63,13 @@ public class DbcpPlugin implements DataSourcePlugin {
         this.props.put("testWhileIdle", true);
         this.props.put("testOnReturn", true);
         this.props.put("validationQuery", "SELECT 1");
-        this.props.put("timeBetweenEvictionRunsMillis", TimeUnit.MINUTES.toMillis(3));
+        this.props.put("timeBetweenEvictionRunsMillis", MINUTES.toMillis(3));
+        this.props.put("minEvictableIdleTimeMillis", MINUTES.toMillis(10));
     }
 
     private DataSource buildDataSource() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(Driver.class.getName());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
